@@ -1,0 +1,11 @@
+# ==========================================================
+# FirstJoinWebhook Configuration file 
+# ==========================================================
+
+url: "_____DISCORD_WEBHOOK_URL_CHANGE_ME_____"
+content: |
+ :point_right: 新規プレイヤー参加
+ ```
+ プレイヤー名： %player%
+ 調査用コマンド： /co l a:block t:2w r:#world u:%player%
+ ```
