@@ -1,5 +1,6 @@
 name: FirstJoinWebhook
-version: 1.0.0
+version: '${version}'
+api-version: '1.21.11'
 main: space.gorogoro.firstjoinwebhook.FirstJoinWebhook
 description: This is a Minecraft plugin that sends a notification via a webhook when a player connects for the first time.
 author: kubotan
