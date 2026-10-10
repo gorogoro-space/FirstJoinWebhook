@@ -54,12 +54,12 @@
 (現在の実装の動作。仕様を変えたらここを更新する)
 
 - **起動時(`onEnable`)**: `config.yml` が無ければ jar 内のものを保存し、リスナーを登録する
-- **参加時(`PlayerJoinEvent`)**: `hasPlayedBefore()` が false(初参加)のときだけ、非同期タスクで `url` に POST する。本文は `{"content": "..."}` の JSON で、`content` の `%player%` をプレイヤー名に置き換え、バックスラッシュ・ダブルクォート・改行をエスケープする(CR は削除)。`url` が空なら何もしない。接続・応答の待ち時間はそれぞれ 5 秒で、超えたらエラーをログに出して送信をあきらめる。応答コードが 2xx なら成功、それ以外は警告をログに出す
+- **参加時(`PlayerJoinEvent`)**: `hasPlayedBefore()` が false(初参加)のときだけ、非同期タスクで `url` に POST する。本文は `{"content": "..."}` の JSON で、`content` の `%player%` をプレイヤー名に置き換え、バックスラッシュ・ダブルクォート・改行をエスケープする(CR は削除)。`url` が空なら何もしない。`config.yml` から `content` を消した場合は jar 内 config.yml の `content` を使う。接続・応答の待ち時間はそれぞれ 5 秒で、超えたらエラーをログに出して送信をあきらめる。応答コードが 2xx なら成功、それ以外は警告をログに出す
 - **`/fjw reload`**: OP のみ。`config.yml` を読み直す。OP 以外には権限がない旨を、引数が違えば使い方を表示する
 
 ## 過去にハマった点(他プロジェクトでの経験)
 
-- `config.getString(path, "")` のように既定値を渡すと、jar 内 config.yml の既定値が参照されない。既定値なしで取得して null を判定すること(このプラグインの `content` の取得は今この書き方になっている。直すのは頼まれたとき)
+- `config.getString(path, "")` のように既定値を渡すと、jar 内 config.yml の既定値が参照されない。既定値なしで取得して null を判定すること
 - plugin.yml で `default: true` にした権限でも、登録されないと Bukkit は「OP のみ」として扱う。全員向けの機能を権限で縛らない
 
 ## ファイル構成

@@ -77,7 +77,9 @@ public class FirstJoinWebhook extends JavaPlugin implements Listener{
                   connection.setUseCaches(false);
                   
                   // プレイヤー名などを埋め込めるようにする場合はここで置換
-                  String content = getConfig().getString("content", "Welcome!");
+                  // 既定値を渡すと jar 内 config.yml の既定値が使われないため、既定値なしで取得する
+                  String content = getConfig().getString("content");
+                  if (content == null) return;
                   content = content.replace("%player%", event.getPlayer().getName());
                   
                   // JSONの構文を壊さないようにエスケープ処理
