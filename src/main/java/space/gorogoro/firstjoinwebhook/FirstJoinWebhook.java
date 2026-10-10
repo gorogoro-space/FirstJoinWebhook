@@ -59,12 +59,13 @@ public class FirstJoinWebhook extends JavaPlugin implements Listener{
       if (!event.getPlayer().hasPlayedBefore()) {
           // 初参加プレイヤーの場合、通信処理を非同期（別スレッド）で実行する
           Bukkit.getScheduler().runTaskAsynchronously(this, () -> {
+              HttpURLConnection connection = null;
               try {
                   String urlStr = getConfig().getString("url");
                   if (urlStr == null || urlStr.isEmpty()) return;
 
                   URL url = new URI(urlStr).toURL();
-                  HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                  connection = (HttpURLConnection) url.openConnection();
                   // 応答がないときにスレッドが止まり続けないよう、接続・応答とも 5 秒で打ち切る
                   connection.setConnectTimeout(5000);
                   connection.setReadTimeout(5000);
@@ -105,11 +106,13 @@ public class FirstJoinWebhook extends JavaPlugin implements Listener{
                       getLogger().warning("Failed. Response code: " + responseCode);
                   }
 
-                  // 最後に必ず切断する
-                  connection.disconnect();
-
               } catch (IOException | URISyntaxException e) {
                   getLogger().severe("Webhook error: " + e.getMessage());
+              } finally {
+                  // 例外や途中の return があっても、最後に必ず切断する
+                  if (connection != null) {
+                      connection.disconnect();
+                  }
               }
           });
       }
