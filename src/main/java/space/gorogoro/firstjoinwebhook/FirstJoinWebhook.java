@@ -30,7 +30,7 @@ public class FirstJoinWebhook extends JavaPlugin implements Listener{
 
       // Register the event listener.
       getServer().getPluginManager().registerEvents(this, this);
-      getLogger().info("[ServerListMod] It started up successfully.");
+      getLogger().info("It started up successfully.");
   }
 
   @Override
