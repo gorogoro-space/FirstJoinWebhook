@@ -65,6 +65,9 @@ public class FirstJoinWebhook extends JavaPlugin implements Listener{
 
                   URL url = new URI(urlStr).toURL();
                   HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                  // 応答がないときにスレッドが止まり続けないよう、接続・応答とも 5 秒で打ち切る
+                  connection.setConnectTimeout(5000);
+                  connection.setReadTimeout(5000);
 
                   connection.setRequestMethod("POST");
                   connection.setRequestProperty("Content-Type", "application/json;charset=utf-8");
